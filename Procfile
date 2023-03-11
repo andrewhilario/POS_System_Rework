@@ -1,0 +1,1 @@
+web: gunicorn pos_systemv2.wsgi --log-file -
