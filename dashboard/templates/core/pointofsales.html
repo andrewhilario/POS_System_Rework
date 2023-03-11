@@ -1,0 +1,166 @@
+{% extends 'core/pos_base.html' %}
+{% block title %} Point of Sales {% endblock %}
+{% load custom_tags %}
+{% block content %}
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('select').on('change', function () {
+            var url = $(this).val();
+            if (url) {
+                window.location = url;
+            }
+            return false;
+        });
+    });
+
+    $(function () {
+        var sort = GetURLParameter("sort");
+        var filter = GetURLParameter("filter");
+
+        if (sort) $(`#${sort}`).attr('selected', 'selected')
+        if (filter) $(`#${filter}`).attr('selected', 'selected')
+    });
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
+</script>
+<div class="flex flex-col gap-5 items-center py-5 w-5/6 md:w-3/4 lg:w-5/6 overflow-auto scrollbar-hide">
+    <div class="relative w-full flex flex-col gap-5 md:gap-2 lg:gap-5 px-4">
+        <h1 class="text-lg font-semibold">Products</h1>
+
+        <form action="" method="get" class="w-full flex items-center gap-3">
+            <p class="w-1/5 text-sm font-regular">Select Category</p>
+            <select name="" id="" class="w-4/5 p-1 rounded-lg outline-none " placeholder="Select a category">
+                <option value="" class="p-1 rounded-lg outline-none" hidden>Select a Category</option>
+                <option value="?{% query_transform filter='all' %}" class="p-1 rounded-lg outline-none ">All</option>
+                {% for ctg in category %}
+                <option value="?{% query_transform filter=ctg.category_name %}" class="p-1 rounded-lg outline-none ">
+                    {{ctg.category_name}}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <!-- Table for the ordered product -->
+        <div class="w-full  flex flex-col border-2 border-slate-900 rounded-lg">
+            <div class="w-full flex items-center justify-between p-5">
+                <h1 class=" text-slate-900 rounded-lg">
+                    Ordered Products
+                </h1>
+            </div>
+            <div class="w-full overflow-scroll">
+                <table class="w-screen md:w-full md:overflow-hidden">
+                    <tr class="w-full bg-gray-200 flex items-center  font-light text-md gap-4 py-2 px-4">
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Quantity</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Products</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Price</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Total</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Action</th>
+
+                    </tr>
+                    {% if order_completed == True %}
+                    <tr class="w-full items-center flex font-light text-md gap-4 py-2 text-center px-4">
+
+                        <td class="font-normal text-sm md:text-md lg:text-lg">
+                            No available data
+                        </td>
+                    </tr>
+                    {% else %}
+                    {% for order in order_items %}
+                    <tr class="w-full items-center flex font-light text-md gap-4 py-2 text-center px-4">
+                        <td class="w-full font-normal text-center text-sm md:text-md lg:text-lg">
+                            {{order.order_item_quantity}}</td>
+                        <td class="w-full font-normal text-center text-sm md:text-md lg:text-lg">
+                            {{order.order_item_product}}</td>
+                        <td class="w-full font-normal text-center text-sm md:text-md lg:text-lg">
+                            {{order.order_item_price}}</td>
+                        <td class="w-full font-normal text-center text-sm md:text-md lg:text-lg">
+                            {{order.order_item_total}}</td>
+                        <td
+                            class="w-full flex flex-row text-center items-center justify-center gap-2 font-normal text-sm md:text-md lg:text-lg">
+                            <a href=""
+                                class="flex items-center gap-1 py-2 px-2 md:py-2 md:px-2 bg-green-500 rounded-lg text-white"><i
+                                    class="fa-solid fa-pen-to-square"></i><span class="hidden xl:block">Edit</span></a>
+                            <a href=""
+                                class="flex items-center gap-1 py-2 px-2 md:py-2 md:px-2 bg-red-500 rounded-lg text-white"><i
+                                    class="fa-solid fa-trash"></i><span class="hidden xl:block">Delete</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+
+        </div>
+        <!-- Receipt Btn -->
+        <div class="w-full">
+            <a href=""
+                class="bg-[#31B970] rounded-lg py-2 float-right w-2/3 flex items-center justify-center gap-3 text-white">
+                <i class="fa-solid fa-receipt"></i>
+                <p>Show Receipt</p>
+            </a>
+        </div>
+        <!-- All products -->
+        <div class="flex flex-row items-center justify-between">
+            <h1 class="text-xl font-semibold">All Products</h1>
+            <div class="flex flex-row items-center gap-3 w-1/2">
+                <p class="text-md font-medium">Sort by:</p>
+                <select name="" id="" class="py-1 rounded-md text-sm outline-none border-[2px] w-1/2">
+                    <option value="?{% query_transform sort='new' %}">New</option>
+                    <option value="?{% query_transform sort='old' %}">Old</option>
+                    <option id="price_desc" value="?{% query_transform sort='price_desc' %}">Price: High to Low</option>
+                    <option id="price_asc" value="?{% query_transform sort='price_asc' %}">Price: Low to High</option>
+                </select>
+            </div>
+        </div>
+        {% if products %}
+        <div class="relative grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+            <!-- Item -->
+
+            {% for prd in products %}
+            <a href="{% url 'order_item' store_slug=store.store_slug product_slug=prd.product_slug %}"
+                class="flex flex-col w-full border-2 border-slate-900 rounded-lg transition ease-in-out hover:scale-110 cursor-pointer bg-white">
+                <!-- Item Image -->
+                <div class="block w-full h-[100px] bg-cyan-200 rounded-t-lg">
+                    <img src="{{prd.product_image.url}}" alt="" class="w-full h-full object-cover">
+                </div>
+                <!-- Item Name -->
+                <p class="text-sm text-center py-1">
+                    {{prd.product_name}}
+                </p>
+                <!-- Item Price -->
+                <p class="text-sm text-center pb-1">
+                    ${{prd.product_price}}
+                </p>
+            </a>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <h1 class="w-full py-5 text-center font-semibold text-gray-400">No Available Product</h1>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %} Store Lists {% endblock %}
+{% block content %}
+<div class="flex flex-col gap-5 md:w-3/4 px-4 py-3 mx-auto">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-semibold">Store Lists</h1>
+        <a href="{% url 'add_store' %}" class="p-3 bg-[#474973] text-white rounded-lg">
+            Add Store
+        </a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        {% for store in stores %}
+        <a href="{% url 'pos_dashboard' store_slug=store.store_slug %}"
+            class="group flex flex-col w-full border-2 border-slate-900 rounded-lg relative">
+            <div
+                class="hidden absolute top-0 right-0 flex-row items-center text-white lg:text-2xl group-hover:flex z-10">
+                <div class="py-0 px-2">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="py-0 px-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <!-- Store Image -->
+            <div
+                class="block w-full h-[135px] bg-cyan-200 rounded-t-lg md:h-[175px] lg:h-[225px] xl:h-[275px] relative overflow-hidden">
+                <div
+                    class="transition ease-in-out absolute top-0 left-0 w-full h-full bg-black/50 rounded-t-lg group-hover:bg-black/0">
+                </div>
+                <img src="{{store.store_image.url}}" alt=""
+                    class="transition ease-in-out w-full h-full rounded-t-lg group-hover:scale-110 ">
+            </div>
+            <!-- Store Name -->
+            <p class="text-sm text-center py-1 md:pt-3 md:text-md lg:text-lg ">
+                {{store.store_name}}
+            </p>
+            <!-- Store Address -->
+            <p class="text-sm text-center pb-1 md:py-2 md:px-2 md:text-md lg:text-lg ">
+                {{store.store_address}}
+            </p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

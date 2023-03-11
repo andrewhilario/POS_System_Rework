@@ -1,0 +1,72 @@
+{% load static %}
+<div class="w-1/6 md:w-1/4 lg:w-1/6 h-screen border-r-[1px] border-slate-900">
+    <ul class="h-full pb-5 flex flex-col justify-between gap-2 mt-3 items-center text-slate-800 md:items-start">
+        <div class="flex flex-col items-center md:items-start gap-4">
+            <li>
+                <a href="{% url 'pos_dashboard' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800 ">
+                    <i class="fa-solid fa-objects-column  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Dashboard</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'categories' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800 ">
+                    <i class="fa-solid fa-list-ul  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Categories</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'point_of_sales' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-chart-line  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Point of Sales</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sales' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-coins  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Sales</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'products' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-bag-shopping  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Products</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'customers' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-duotone fa-user-group  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Customer</h1>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'messages' store_slug=store.store_slug %}"
+                    class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-message-dots  text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Messages</h1>
+                </a>
+            </li>
+        </div>
+
+        <div class="flex flex-col items-center gap-4 md:items-start">
+            <li>
+                <a href="{% url 'settings' %}" class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-gear text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Settings</h1>
+                </a>
+            </li>
+            <li>
+                <a href="" class="flex py-3 px-5 gap-3 items-center text-slate-800">
+                    <i class="fa-solid fa-arrow-right-from-bracket text-2xl"></i>
+                    <h1 class="hidden md:block text-lg font-medium">Logout</h1>
+                </a>
+            </li>
+        </div>
+    </ul>
+
+</div>

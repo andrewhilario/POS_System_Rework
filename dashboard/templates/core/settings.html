@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Add Category {% endblock %}
+{% block content %}
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+</style>
+<div class="flex flex-col gap-5 items-center py-5 w-5/6 md:w-3/4 lg:w-5/6 overflow-auto scrollbar-hide">
+    <div class="w-full flex flex-row gap-5 md:gap-2 lg:gap-5 px-4">
+        <div class="w-full border-2 border-slate-900 rounded-lg">
+            <div class="w-full flex justify-between border-b-2 border-slate-900 p-4 items-center">
+                <h1 class=" text-lg font-semibold ">
+                    Settings
+                </h1>
+                <a href="{% url 'dashboard' %}" class="bg-[#474973] text-white px-4 py-2 rounded-lg "> Back</a>
+            </div>
+            <form action="" class="text-md px-4 w-full">
+                <div class="py-2">
+                    <label for="">Tax</label>
+                    <input type="number" name="" id=""
+                        class="p-1 mt-2 rounded-md border-[2px] outline-none border-slate-900 w-full">
+                </div>
+                <div class="py-2">
+                    <label for="">Currency</label>
+                    <select name="" id="" class="py-1 border-2 border-slate-900 rounded-lg w-full">
+                        <option value="php">PHP</option>
+                        <option value="php">USD</option>
+                        <option value="php">YEN</option>
+                        <option value="php">CND</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Submit"
+                    class="bg-[#474973] text-white px-4 py-2 my-3 rounded-lg float-right">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

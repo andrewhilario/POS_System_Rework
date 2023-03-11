@@ -1,0 +1,104 @@
+{% extends 'core/pos_base.html' %}
+{% block title %} Add Product {% endblock %}
+{% block content %}
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .error {
+        background-color: #dc2626;
+    }
+
+    .warning {
+        background-color: #d97706;
+    }
+
+    .success {
+        background-color: #16a34a;
+    }
+</style>
+<div class="flex flex-col gap-5 items-center py-5 w-5/6 md:w-3/4 lg:w-5/6 overflow-auto scrollbar-hide">
+    {% for message in messages %}
+    {% if message %}
+    <div id="msg"
+        class="flex gap-2 items-center transition-opacity ease-in-out px-4 py-2 {{message.tags}} text-white rounded-lg">
+        <i class="fa-sharp fa-solid fa-circle-check"></i>{{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="w-full flex flex-row gap-5 md:gap-2 lg:gap-5 px-4">
+        <div class="w-full border-2 border-slate-900 rounded-lg">
+            <div class="w-full flex justify-between border-b-2 border-slate-900 p-4 items-center">
+                <h1 class=" text-lg font-semibold w-1/2 md:w-full">
+                    Add an Order for {{product}}
+                </h1>
+                <a href="{% url 'point_of_sales' store_slug=store.store_slug %}"
+                    class="bg-[#474973] text-white px-4 py-2 rounded-lg "> Back</a>
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="text-md px-4 w-full">
+                {% csrf_token %}
+                <div class="py-2">
+                    <label for="">Quantity</label>
+                    <input type="number" name="quantity" id="quantity" value="0"
+                        class="p-1 mt-2 rounded-md border-[2px] outline-none border-slate-900 w-full">
+                </div>
+                <div class="py-2 flex items-center justify-between ">
+
+                    <p>Total</p>
+                    <div class="flex items-center gap-1">
+                        <p>$</p>
+                        <input type="number" id="total" name="total" step="any" value="0.00"
+                            class="border-none outline-none focus:border-none active:border-none float-right">
+                    </div>
+                </div>
+
+                <input type="submit" value="Submit"
+                    class="bg-[#474973] text-white px-4 py-2 my-3 rounded-lg float-right">
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var opacity = 0;
+    var intervalID = 0;
+    window.onload = fadeout;
+    function fadeout() {
+        setInterval(() => {
+            setInterval(hide, 200);
+            if (opacity > 0) {
+                msg.style.display = 'none';
+            }
+        }, 2000)
+    }
+    function hide() {
+        var msg = document.getElementById("msg");
+        opacity =
+            Number(window.getComputedStyle(msg).getPropertyValue("opacity"))
+
+        if (opacity > 0) {
+            opacity = opacity - 0.1;
+            msg.style.opacity = opacity
+        }
+        else {
+            clearInterval(intervalID);
+        }
+    }
+</script>
+<script>
+    document.getElementById('quantity').addEventListener("keyup", () => {
+        var num = document.getElementById('quantity').value;
+        var price = "{{product.product_price}}"
+        total = num * price
+        document.getElementById("total").value = `${total}`;
+    })
+</script>
+{% endblock %}

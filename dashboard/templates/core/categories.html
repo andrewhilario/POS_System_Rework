@@ -1,0 +1,118 @@
+{% extends 'core/pos_base.html' %}
+{% block title %} Categories {% endblock %}
+{% block content %}
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .error {
+        background-color: #dc2626;
+    }
+
+    .warning {
+        background-color: #d97706;
+    }
+
+    .success {
+        background-color: #16a34a;
+    }
+</style>
+<div class="flex flex-col gap-5 items-center py-5 w-5/6 md:w-3/4 lg:w-5/6 overflow-auto scrollbar-hide">
+    {% for message in messages %}
+    {% if message %}
+    <div id="msg"
+        class="flex gap-2 items-center transition-opacity ease-in-out px-4 py-2 {{message.tags}} text-white rounded-lg">
+        <i class="fa-sharp fa-solid fa-circle-check"></i>{{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="w-full flex flex-row gap-5 md:gap-2 lg:gap-5 px-4">
+        <div class="w-full  flex flex-col border-2 border-slate-900 rounded-lg">
+            <div class="w-full flex items-center justify-between p-5">
+                <a href="{% url 'add_category' store_slug=store.store_slug %}"
+                    class="p-3 bg-[#474973] text-white rounded-lg">
+                    Add New Category
+                </a>
+            </div>
+            <div class="w-full overflow-scroll">
+                <table class="w-screen md:w-full md:overflow-hidden">
+                    <tr class="w-full bg-gray-200 flex items-center  font-light text-md gap-4 py-2 px-4">
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Category Code</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Category</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Date</th>
+                        <th class="w-full font-normal text-sm md:text-md  lg:text-lg md:w-1/2">Action</th>
+                    </tr>
+
+                    {% if categories %}
+                    {% for ctg in categories %}
+                    <tr class="w-full items-center flex font-light text-md gap-4 py-2 text-center px-4">
+                        <td class="w-full font-normal text-sm md:text-md lg:text-lg">
+                            {{ctg.category_code}}
+                        </td>
+                        <td class="w-full font-normal text-sm md:text-md lg:text-lg">
+                            {{ctg.category_name}}
+                        </td>
+                        <td class="w-full font-normal text-sm md:text-md lg:text-lg">
+                            {{ctg.category_created|date:"m-d-Y"}}
+                        </td>
+                        <td
+                            class="w-full flex flex-row items-center justify-center gap-2 font-normal text-sm md:text-md lg:text-lg">
+                            <a href="{% url 'edit_category' store_slug=store.store_slug category_slug=ctg.category_slug %}"
+                                class="flex items-center gap-1 py-3 px-4 md:py-2 md:px-2 bg-green-500 rounded-lg text-white"><i
+                                    class="fa-solid fa-pen-to-square"></i><span class="hidden md:block">Edit</span></a>
+                            <a href="{% url 'delete_category' store_slug=store.store_slug category_slug=ctg.category_slug %}"
+                                class="flex items-center gap-1 py-3 px-4 md:py-2 md:px-2 bg-red-500 rounded-lg text-white"><i
+                                    class="fa-solid fa-trash"></i><span class="hidden md:block">Delete</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr class="w-full items-center flex font-light text-md gap-4 py-2 text-center px-4">
+                        <td class="font-normal text-sm md:text-md lg:text-lg">
+                            No available data
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var opacity = 0;
+    var intervalID = 0;
+    window.onload = fadeout;
+    function fadeout() {
+        setInterval(() => {
+            setInterval(hide, 200);
+            if (opacity > 0) {
+                msg.style.display = 'none';
+            }
+        }, 2000)
+    }
+    function hide() {
+        var msg = document.getElementById("msg");
+        opacity =
+            Number(window.getComputedStyle(msg).getPropertyValue("opacity"))
+
+        if (opacity > 0) {
+            opacity = opacity - 0.1;
+            msg.style.opacity = opacity
+        }
+        else {
+            clearInterval(intervalID);
+        }
+    }
+</script>
+{% endblock %}

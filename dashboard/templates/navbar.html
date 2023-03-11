@@ -1,0 +1,26 @@
+{% load static %}
+<div class="w-full flex flex-row justify-between border-b-[1px] border-slate-900 items-center">
+    <div class="flex py-5 items-center border-r-[1px] border-slate-900 px-5 w-1/6 md:w-1/4 lg:w-1/6">
+        <div id="logo" class="w-10 h-10 m-auto lg:m-0 lg:w-16 lg:h-16">
+            <img src="{% static 'images/Logo.png' %}" alt="">
+        </div>
+        <h1 class="hidden md:block font-semibold ml-2 lg:ml-1 lg:text-2xl">POINT OF SALES</h1>
+    </div>
+    <div class="flex items-center justify-between gap-5 md:gap-[5rem] pr-5">
+        <form action="" class="relative">
+            <input type="search" name="" id="" class="px-2 py-1 rounded-lg text-sm pl-8 border-2">
+            <div class="w-5 h-5 absolute top-[6px] left-1">
+                <img src="{% static 'icons/Search.png' %}" alt="">
+            </div>
+        </form>
+        <div id="admin" class="flex items-center gap-4">
+            <div class="hidden md:flex md:flex-col md:items-center">
+                <h1 class="text-md font-medium">John Doe</h1>
+                <p class="text-sm font-regular">Administrator</p>
+            </div>
+            <div class="w-10 h-10 cursor-pointer">
+                <img src="{% static 'images/icons8-circled-user-male-skin-type-4.gif' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>

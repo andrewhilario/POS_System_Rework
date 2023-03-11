@@ -1,0 +1,47 @@
+{% extends 'core/pos_base.html' %}
+{% block title %} Sales {% endblock %}
+{% block content %}
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+</style>
+<div class="flex flex-col gap-5 items-center py-5 w-5/6 md:w-3/4 lg:w-5/6 overflow-auto scrollbar-hide">
+    <div class="w-full flex flex-row gap-5 md:gap-2 lg:gap-5 px-4">
+        <div class="w-full  flex flex-col border-2 border-slate-900 rounded-lg">
+            <div class="w-full flex items-center justify-between p-5">
+                <h1 class=" text-slate-900 font-semibold">
+                    Transactions
+                </h1>
+            </div>
+            <div class="w-full overflow-scroll">
+                <table class="w-screen md:w-full md:overflow-hidden">
+                    <tr class="w-full bg-gray-200 flex items-center  font-light text-md gap-4 py-2 px-4">
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Transaction #</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Transaction Code</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Date</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Total</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Tax Inclusive</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Qty</th>
+                        <th class="w-full font-normal text-sm md:text-md lg:text-lg md:w-full">Action</th>
+                    </tr>
+                    <tr class="w-full items-center flex font-light text-md gap-4 py-2 text-center px-4">
+                        <td class="font-normal text-sm md:text-md lg:text-lg">
+                            No available data
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
