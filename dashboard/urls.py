@@ -17,6 +17,8 @@ urlpatterns = [
     #Point of Sales
     path('store/<slug:store_slug>/point-of-sales/', views.pointofsales, name="point_of_sales"),
     path('store/<slug:store_slug>/order/<slug:product_slug>', views.order_item, name="order_item"),
+    path('store/<slug:store_slug>/order/<slug:product_slug>/edit/', views.edit_orderitem, name="edit_orderitem"),
+    path('store/<slug:store_slug>/order/<slug:product_slug>/delete/', views.delete_orderitem, name="delete_orderitem"),
     path("store/<slug:store_slug>/sales/", views.sales, name="sales"),
     # Products
     path("store/<slug:store_slug>/products/", views.product, name="products"),

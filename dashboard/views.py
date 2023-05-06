@@ -124,6 +124,11 @@ def pointofsales(request, store_slug):
     print(order_completed)
 
 
+    
+    
+    
+
+
     sort = request.GET.get('sort', None)
     category = request.GET.get('filter', None)
 
@@ -162,6 +167,7 @@ def order_item(request, store_slug, product_slug):
     uuid = uuid4()
     truncate_uuid = str(uuid)[:6]
     print(truncate_uuid)
+
 
     if request.method == 'POST':
         quantity = request.POST.get('quantity')
@@ -203,6 +209,7 @@ def order_item(request, store_slug, product_slug):
                 )
                 order_obj.save()
                 for prd,qty in zip(product,quantity):
+                    print(prd.product_slug)
                     order_item_obj = OrderItem.objects.create(
                         order_item_id=truncate_uuid,
                         order_item_order=order_obj,
@@ -222,6 +229,24 @@ def order_item(request, store_slug, product_slug):
         'product' : products,
     }
     return render(request, 'core/addorder.html', context)
+
+def edit_orderitem(request, store_slug, product_slug):
+    store = get_object_or_404(Store, store_slug=store_slug)
+    products = get_object_or_404(Product,product_slug=product_slug)
+
+    context={
+
+    }
+    return render(request, 'core/editorder.html', context)
+
+def delete_orderitem(request, store_slug, product_slug):
+    store = get_object_or_404(Store, store_slug=store_slug)
+    products = get_object_or_404(Product,product_slug=product_slug)
+
+
+
+
+    return redirect('point_of_sales', store_slug=store.store_slug)
 
 def sales(request, store_slug):
     store = get_object_or_404(Store, store_slug=store_slug)
