@@ -15,6 +15,16 @@ import os
 from os import getenv
 from urllib.parse import urlparse
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name="dyqidtvyi",
+    api_key="363848286745199",
+    api_secret="qcYFFpSA1PJrVTtIq1BRrqJyMxI",  # Click 'View API Keys' above to copy your API secret
+    secure=True,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,7 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "dashboard",
     # Django Auto Refresh
-    "django_browser_reload",
+    # "django_browser_reload",
 ]
 
 MIDDLEWARE = [
@@ -58,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Django Auto Refresh
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "pos_systemv2.urls"
@@ -89,13 +99,13 @@ WSGI_APPLICATION = "pos_systemv2.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': tmpPostgres.path[1:],
-        'USER': tmpPostgres.username,
-        'PASSWORD': tmpPostgres.password,
-        'HOST': tmpPostgres.hostname,
-        'PORT': 5432,
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": tmpPostgres.path[1:],
+        "USER": tmpPostgres.username,
+        "PASSWORD": tmpPostgres.password,
+        "HOST": tmpPostgres.hostname,
+        "PORT": 5432,
     }
 }
 
@@ -134,6 +144,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "dyqidtvyi",
+    "API_KEY": "363848286745199",
+    "API_SECRET": "qcYFFpSA1PJrVTtIq1BRrqJyMxI",
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 STATIC_URL = "/static/"
 MEDIA_URL = "/images/"
