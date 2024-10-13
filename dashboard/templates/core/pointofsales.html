@@ -98,10 +98,10 @@
                             {{order.order_item_total}}</td>
                         <td
                             class="w-full flex flex-row text-center items-center justify-center gap-2 font-normal text-sm md:text-md lg:text-lg">
-                            <a href=""
+                            <a href="{% url 'edit_orderitem' store_slug=order.order_item_order.order_store.store_slug product_slug=order.order_item_product.product_slug %}"
                                 class="flex items-center gap-1 py-2 px-2 md:py-2 md:px-2 bg-green-500 rounded-lg text-white"><i
                                     class="fa-solid fa-pen-to-square"></i><span class="hidden xl:block">Edit</span></a>
-                            <a href=""
+                            <a href="{% url 'delete_orderitem' store_slug=order.order_item_order.order_store.store_slug product_slug=order.order_item_product.product_slug %}"
                                 class="flex items-center gap-1 py-2 px-2 md:py-2 md:px-2 bg-red-500 rounded-lg text-white"><i
                                     class="fa-solid fa-trash"></i><span class="hidden xl:block">Delete</span></a>
                         </td>
@@ -114,11 +114,12 @@
         </div>
         <!-- Receipt Btn -->
         <div class="w-full">
-            <a href=""
-                class="bg-[#31B970] rounded-lg py-2 float-right w-2/3 flex items-center justify-center gap-3 text-white">
-                <i class="fa-solid fa-receipt"></i>
-                <p>Show Receipt</p>
-            </a>
+            {% if order %}
+                <a href="{% url 'show_receipt' order_id=order.id %}" class="bg-[#31B970] rounded-lg py-2 float-right w-2/3 flex items-center justify-center gap-3 text-white">
+                    <i class="fa-solid fa-receipt"></i>
+                    <p>Show Receipt</p>
+                </a>
+            {% endif %}
         </div>
         <!-- All products -->
         <div class="flex flex-row items-center justify-between">
